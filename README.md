@@ -164,7 +164,7 @@ cd apps/api && npm run build
 |-------|--------|-------------|
 | **Phase 0** | ✅ Complete | Repository & Tooling |
 | **Phase 1** | ✅ Complete | Database schema & Kysely |
-| Phase 2 | ⬜ Not started | Webhook ingestion |
+| **Phase 2** | ✅ Complete | Webhook ingestion, HMAC verification, dual-layer idempotency |
 | Phase 3 | ⬜ Not started | Payment state service |
 | Phase 4 | ⬜ Not started | Recovery state machine |
 | Phase 5-19 | ⬜ Not started | See specification §26 |
