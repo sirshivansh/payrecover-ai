@@ -57,7 +57,7 @@ export async function up(db: Kysely<unknown>): Promise<void> {
     .addColumn('revenue_at_risk_paise', 'bigint', (col) => col.notNull())
     .addColumn('ai_recommendation', 'jsonb')
     .addColumn('ai_decision', sql`ai_decision_type`)
-    .addColumn('ai_confidence', 'decimal(3,2)')
+    .addColumn('ai_confidence', sql`decimal(3,2)`)
     .addColumn('ai_reasoning', 'text')
     .addColumn('policy_decision', sql`policy_decision_type`)
     .addColumn('policy_reason', 'text')

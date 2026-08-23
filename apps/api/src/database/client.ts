@@ -30,7 +30,6 @@ export function createDatabaseClient(env: AppEnv): DatabaseClient {
     pool,
     close: async () => {
       await db.destroy();
-      await pool.end();
     },
   };
 }

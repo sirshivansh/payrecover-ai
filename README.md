@@ -102,6 +102,8 @@ payrecover-ai/
 | `npm run lint:fix` | Auto-fix lint issues |
 | `npm run format` | Format all code (Biome) |
 | `npm run type-check` | TypeScript type checking |
+| `npm run db:migrate` | Run database migrations to latest schema |
+| `npm run db:rollback` | Rollback latest database migration |
 | `npm run clean` | Clean build artifacts |
 
 ## Docker Setup
@@ -161,7 +163,7 @@ cd apps/api && npm run build
 | Phase | Status | Description |
 |-------|--------|-------------|
 | **Phase 0** | ✅ Complete | Repository & Tooling |
-| Phase 1 | ⬜ Not started | Database schema & Kysely |
+| **Phase 1** | ✅ Complete | Database schema & Kysely |
 | Phase 2 | ⬜ Not started | Webhook ingestion |
 | Phase 3 | ⬜ Not started | Payment state service |
 | Phase 4 | ⬜ Not started | Recovery state machine |

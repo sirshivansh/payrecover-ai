@@ -27,7 +27,6 @@ async function main() {
     process.exit(1);
   } finally {
     await db.destroy();
-    await pool.end();
   }
 }
 
