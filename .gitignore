@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+*.tsbuildinfo
+
+# Turborepo
+.turbo/
+
+# Environment files — NEVER commit secrets
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pino-*.log
+
+# Coverage
+coverage/
+
+# Docker volumes (local)
+pgdata/
+
+# Misc
+*.bak
+*.tmp
+
+# User override — ignore specifications directory
+docs/
+
