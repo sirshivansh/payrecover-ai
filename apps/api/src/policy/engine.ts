@@ -93,8 +93,7 @@ export class PolicyEngine {
 
     // POL-005: Business Hours (§11.2, §11.3 - Payment link creation allowed 24/7)
     const isBusinessHoursValid =
-      recommendation.recommended_action === RecoveryActionType.CREATE_PAYMENT_LINK ||
-      context.isBusinessHours;
+      recommendation.recommended_action === RecoveryActionType.CREATE_PAYMENT_LINK || context.isBusinessHours;
     addRuleResult(
       'POL-005',
       'Business Hours',

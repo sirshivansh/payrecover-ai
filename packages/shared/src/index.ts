@@ -23,5 +23,12 @@ export * from './razorpay/types.js';
 export * from './razorpay/client.js';
 export * from './razorpay/mock-provider.js';
 
+// AI Provider Abstraction (§10, v2.1.1 §10)
+export * from './ai/provider.js';
+export * from './ai/schemas.js';
+export * from './ai/prompts.js';
+export * from './ai/nemotron-provider.js';
+export * from './ai/mock-provider.js';
+
 // Utilities
 export * from './utils/pii.js';

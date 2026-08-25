@@ -27,7 +27,7 @@ const envSchema = z.object({
   RAZORPAY_KEY_SECRET: z.string().optional(),
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
 
-  // NVIDIA AI (Phase 9+)
+  // NVIDIA AI (Phase 7+)
   NVIDIA_API_KEY: z.string().optional(),
   NVIDIA_MODEL_ID: z.string().default('nvidia/nemotron-3-ultra-550b-a55b'),
 
