@@ -170,7 +170,9 @@ cd apps/api && npm run build
 | **Phase 5** | ✅ Complete | Redis Idempotency / Locks & Dual-Layer Infrastructure |
 | **Phase 6** | ✅ Complete | Deterministic Policy Engine (7 ordered rules, BigInt paise, pure function) |
 | **Phase 7** | ✅ Complete | AI Provider Abstraction & Nemotron Integration (NVIDIA Build API, MockAIProvider) |
-| Phase 8-19 | ⬜ Pending | See specification §26 |
+| **Phase 8** | ✅ Complete | Action Executor & Bounded Tools (Policy-gated, authoritative DB amounts, `CREATE_PAYMENT_LINK`, Test Mode) |
+| **Phase 9** | ✅ Complete | Recovery Job Worker & Async Orchestration (`recovery_jobs` table, `JobScheduler`, `RecoveryJobWorker`, `FOR UPDATE SKIP LOCKED` claim strategy, backoff retries, trace audit) |
+| Phase 10-19 | ⬜ Pending | See specification §26 |
 
 ## Specification
 

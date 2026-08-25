@@ -35,6 +35,18 @@ export const DEFAULT_MERCHANT_CONFIG: MerchantConfig = {
   confidenceThreshold: 0.6,
 };
 
+export const DEFAULT_MERCHANT_CONFIG_JSON = {
+  maxAttempts: 3,
+  cooldownHours: 24,
+  allowedActions: [DomainRecoveryActionType.CREATE_PAYMENT_LINK, DomainRecoveryActionType.STOP_RECOVERY],
+  minAmountPaise: 10000,
+  maxAmountPaise: 10000000,
+  businessHoursStart: 9,
+  businessHoursEnd: 21,
+  timezone: 'Asia/Kolkata',
+  confidenceThreshold: 0.6,
+};
+
 /**
  * AI Recommendation Input for Policy Engine (§10.1, v2.1.1 §10.1)
  */

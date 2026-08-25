@@ -10,6 +10,7 @@ export * from './domain/enums.js';
 export * from './domain/recovery.js';
 export * from './domain/idempotency.js';
 export * from './domain/policy.js';
+export * from './domain/action.js';
 
 // Database Types
 export * from './database/types.js';

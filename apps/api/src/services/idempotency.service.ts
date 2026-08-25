@@ -102,7 +102,7 @@ export class IdempotencyService {
         .where('id', '=', attemptId)
         .executeTakeFirst();
 
-      if (attempt && (attempt.action_result !== null || attempt.action_type === actionType)) {
+      if (attempt && attempt.action_result !== null) {
         return 'DUPLICATE';
       }
       return 'NEW';

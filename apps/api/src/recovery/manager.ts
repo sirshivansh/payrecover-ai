@@ -3,6 +3,7 @@ import {
   AuditActor,
   ConcurrentRecoveryError,
   type CreateAttemptParams,
+  DEFAULT_MERCHANT_CONFIG_JSON,
   type Database,
   RecoveryAttemptNotFoundError,
   type RecoveryAttemptRow,
@@ -81,7 +82,7 @@ export class RecoveryManager {
 
       // 5. Determine revenue_at_risk_paise
       const revenueAtRiskPaise = params.revenueAtRiskPaise ?? payment.amount_paise;
-      const policySnapshot = params.policySnapshot ?? { maxAttempts: 3, cooldownHours: 24 };
+      const policySnapshot = params.policySnapshot ?? DEFAULT_MERCHANT_CONFIG_JSON;
 
       // 6. Insert new attempt row with PENDING status
       let createdAttempt: RecoveryAttemptRow;
