@@ -10,7 +10,7 @@ export function getRedisClient(env: AppEnv): Redis {
       maxRetriesPerRequest: 3,
       retryStrategy(times) {
         if (times > 3) {
-          return null; // Stop retrying
+          return null; // Stop retrying after 3 attempts
         }
         return Math.min(times * 100, 1000);
       },
@@ -22,6 +22,10 @@ export function getRedisClient(env: AppEnv): Redis {
   }
 
   return redisInstance;
+}
+
+export function isRedisHealthy(redis: Redis | null): boolean {
+  return redis !== null && redis.status === 'ready';
 }
 
 export async function closeRedisClient(): Promise<void> {

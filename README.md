@@ -163,11 +163,12 @@ cd apps/api && npm run build
 | Phase | Status | Description |
 |-------|--------|-------------|
 | **Phase 0** | ✅ Complete | Repository & Tooling |
-| **Phase 1** | ✅ Complete | Database schema & Kysely |
-| **Phase 2** | ✅ Complete | Webhook ingestion, HMAC verification, dual-layer idempotency |
-| Phase 3 | ⬜ Not started | Payment state service |
-| Phase 4 | ⬜ Not started | Recovery state machine |
-| Phase 5-19 | ⬜ Not started | See specification §26 |
+| **Phase 1** | ✅ Complete | Database schema & Kysely migrations |
+| **Phase 2** | ✅ Complete | Razorpay Webhook Receiver, HMAC verification, PII pseudonymization |
+| **Phase 3** | ✅ Complete | Payment State Service & Razorpay Client (`rzp_test_*` assertion) |
+| **Phase 4** | ✅ Complete | Recovery State Machine & RecoveryManager CRUD |
+| **Phase 5** | ✅ Complete | Redis Idempotency / Locks & Dual-Layer Infrastructure |
+| Phase 6-19 | ⬜ Pending | See specification §26 |
 
 ## Specification
 
