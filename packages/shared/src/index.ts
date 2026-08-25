@@ -5,8 +5,9 @@
 export const PACKAGE_NAME = '@payrecover/shared';
 export const PACKAGE_VERSION = '0.1.0';
 
-// Domain Enums
+// Domain Enums & Recovery Types
 export * from './domain/enums.js';
+export * from './domain/recovery.js';
 
 // Database Types
 export * from './database/types.js';
