@@ -172,7 +172,9 @@ cd apps/api && npm run build
 | **Phase 7** | ✅ Complete | AI Provider Abstraction & Nemotron Integration (NVIDIA Build API, MockAIProvider) |
 | **Phase 8** | ✅ Complete | Action Executor & Bounded Tools (Policy-gated, authoritative DB amounts, `CREATE_PAYMENT_LINK`, Test Mode) |
 | **Phase 9** | ✅ Complete | Recovery Job Worker & Async Orchestration (`recovery_jobs` table, `JobScheduler`, `RecoveryJobWorker`, `FOR UPDATE SKIP LOCKED` claim strategy, backoff retries, trace audit) |
-| Phase 10-19 | ⬜ Pending | See specification §26 |
+| **Phase 10** | ✅ Complete | Evaluation Engine & Deterministic Outcome Verification (`evaluateOutcome` pure function, `OutcomeVerifier`, conservative v2.1.1 §12.3 `Reconciler`, BigInt financial authority, audit trail) |
+| **Phase 11** | ✅ Complete | External Reconciliation & Synthetic Evaluation Scenarios (`Reconciler` payment-link query & conservative §12.3 escalation, 21-case deterministic synthetic evaluation framework in `evaluation/`, CLI `npm run evaluate`) |
+| Phase 12-19 | ⬜ Pending | See specification §26 |
 
 ## Specification
 

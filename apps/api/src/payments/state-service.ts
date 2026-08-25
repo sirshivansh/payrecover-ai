@@ -6,6 +6,7 @@ import {
   type PaymentRow,
   PaymentStatus,
   RazorpayNotFoundError,
+  type RazorpayPaymentLink,
   hmacPII,
 } from '@payrecover/shared';
 import type { Kysely } from 'kysely';
@@ -212,5 +213,17 @@ export class PaymentStateService {
       .execute();
 
     return updatedPayment;
+  }
+
+  /**
+   * Fetch payment link details from Razorpay API (§12.3, §14.2)
+   */
+  async getPaymentLink(linkId: string): Promise<RazorpayPaymentLink | null> {
+    if (!this.razorpay) return null;
+    try {
+      return await this.razorpay.getPaymentLink(linkId);
+    } catch {
+      return null;
+    }
   }
 }

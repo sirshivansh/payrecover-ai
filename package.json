@@ -13,6 +13,7 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "type-check": "turbo run type-check",
+    "evaluate": "tsx evaluation/runner.ts",
     "db:migrate": "tsx database/cli.ts latest",
     "db:rollback": "tsx database/cli.ts rollback",
     "clean": "turbo run clean && rimraf node_modules"
