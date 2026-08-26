@@ -174,7 +174,9 @@ cd apps/api && npm run build
 | **Phase 9** | ✅ Complete | Recovery Job Worker & Async Orchestration (`recovery_jobs` table, `JobScheduler`, `RecoveryJobWorker`, `FOR UPDATE SKIP LOCKED` claim strategy, backoff retries, trace audit) |
 | **Phase 10** | ✅ Complete | Evaluation Engine & Deterministic Outcome Verification (`evaluateOutcome` pure function, `OutcomeVerifier`, conservative v2.1.1 §12.3 `Reconciler`, BigInt financial authority, audit trail) |
 | **Phase 11** | ✅ Complete | External Reconciliation & Synthetic Evaluation Scenarios (`Reconciler` payment-link query & conservative §12.3 escalation, 21-case deterministic synthetic evaluation framework in `evaluation/`, CLI `npm run evaluate`) |
-| Phase 12-19 | ⬜ Pending | See specification §26 |
+| **Phase 12** | ✅ Complete | Audit, Metrics & Observability Service (`AuditLogger`, `MetricsService`, PII/secret redaction, `GET /api/v1/metrics/summary`, `GET /api/v1/recoveries`, `X-Merchant-Key` auth) |
+| **Phase 13** | ✅ Complete | Merchant Dashboard & Recovery Operations UI (`apps/web` React + Vite UI, Overview metrics, paginated recoveries, attempt detail, 10-state lifecycle visualizer, audit trace timeline, PII safety, `X-Merchant-Key` auth) |
+| Phase 14-19 | ⬜ Pending | See specification §26 |
 
 ## Specification
 

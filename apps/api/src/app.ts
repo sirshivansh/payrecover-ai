@@ -2,6 +2,8 @@ import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import type { AppEnv } from './config/env.js';
 import { type DatabaseClient, createDatabaseClient } from './database/client.js';
+import { metricsRoutes } from './routes/metrics.js';
+import { recoveriesRoutes } from './routes/recoveries.js';
 import { webhookRoutes } from './routes/webhooks.js';
 
 export interface AppOptions {
@@ -40,6 +42,12 @@ export async function buildApp(options: AppOptions) {
 
   // Register Webhook Routes (§8.2)
   await app.register(webhookRoutes({ env: options.env, dbClient }));
+
+  // Register Metrics Routes — Phase 12 (§8.1)
+  await app.register(metricsRoutes({ dbClient }));
+
+  // Register Recoveries Routes — Phase 12 (§8.1)
+  await app.register(recoveriesRoutes({ dbClient }));
 
   // Health check endpoint
   app.get('/health', async (_request, _reply) => {
