@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: ['.env.local', '.env'], override: true });
 import type { Database } from '@payrecover/shared';
 import { Kysely, PostgresDialect } from 'kysely';
 import pg from 'pg';

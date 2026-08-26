@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PaymentStatus, hmacPII } from '@payrecover/shared';
+import { PaymentStatus, RecoveryStatus, hmacPII } from '@payrecover/shared';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { buildApp } from '../app.js';
 import { loadEnv } from '../config/env.js';
@@ -259,5 +259,125 @@ describe('Phase 2 — Webhook Ingestion & Idempotency', () => {
     // Clean up
     await dbClient.db.deleteFrom('webhook_events').where('event_id', '=', eventId).execute();
     await dbClient.db.deleteFrom('payments').where('razorpay_payment_id', '=', paymentId).execute();
+  });
+
+  it('should process valid payment_link.paid webhook, link existing recovery attempt & transition to SUCCEEDED', async () => {
+    const origRzpId = `pay_orig_${Date.now()}`;
+    const plinkId = `plink_test_${Date.now()}`;
+    const newRzpId = `pay_link_paid_${Date.now()}`;
+    const eventId = `evt_plink_paid_${Date.now()}`;
+
+    // 1. Create original failed payment & recovery attempt in verifying status
+    const origPayment = await dbClient.db
+      .insertInto('payments')
+      .values({
+        razorpay_payment_id: origRzpId,
+        amount_paise: '350000',
+        currency: 'INR',
+        status: PaymentStatus.FAILED,
+        attempts: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+      })
+      .returningAll()
+      .executeTakeFirstOrThrow();
+
+    const attempt = await dbClient.db
+      .insertInto('recovery_attempts')
+      .values({
+        payment_id: origPayment.id,
+        attempt_number: 1,
+        status: RecoveryStatus.VERIFYING,
+        revenue_at_risk_paise: '350000',
+        policy_snapshot: { maxAttempts: 3 },
+        ai_decision: 'recover_now',
+        action_type: 'create_payment_link',
+        action_result: { paymentLinkId: plinkId, paymentLinkUrl: `https://rzp.io/i/${plinkId}` },
+        started_at: new Date(),
+      })
+      .returningAll()
+      .executeTakeFirstOrThrow();
+
+    // 2. Build payment_link.paid webhook payload
+    const payloadObj = {
+      id: eventId,
+      entity: 'event',
+      event: 'payment_link.paid',
+      account_id: 'acc_test_123',
+      contains: ['payment', 'payment_link'],
+      payload: {
+        payment: {
+          entity: {
+            id: newRzpId,
+            entity: 'payment',
+            amount: 350000,
+            currency: 'INR',
+            status: 'captured',
+            created_at: Math.floor(Date.now() / 1000),
+          },
+        },
+        payment_link: {
+          entity: {
+            id: plinkId,
+            entity: 'payment_link',
+            amount: 350000,
+            currency: 'INR',
+            status: 'paid',
+            notes: { payment_id: origPayment.id },
+          },
+        },
+      },
+      created_at: Math.floor(Date.now() / 1000),
+    };
+
+    const { rawBody, signature } = createSignedPayload(payloadObj);
+
+    // 3. Send webhook request
+    const res = await app.inject({
+      method: 'POST',
+      url: '/webhooks/razorpay',
+      headers: {
+        'content-type': 'application/json',
+        'x-razorpay-signature': signature,
+      },
+      body: rawBody,
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.status).toBe('processed');
+
+    // 4. Verify PostgreSQL state update
+    const updatedPayment = await dbClient.db
+      .selectFrom('payments')
+      .selectAll()
+      .where('id', '=', origPayment.id)
+      .executeTakeFirstOrThrow();
+
+    expect(updatedPayment.status).toBe(PaymentStatus.PAID);
+    expect(updatedPayment.paid_at).toBeDefined();
+
+    const updatedAttempt = await dbClient.db
+      .selectFrom('recovery_attempts')
+      .selectAll()
+      .where('id', '=', attempt.id)
+      .executeTakeFirstOrThrow();
+
+    expect(updatedAttempt.status).toBe(RecoveryStatus.SUCCEEDED);
+
+    // Verify no new recovery attempts were created
+    const attemptsCount = await dbClient.db
+      .selectFrom('recovery_attempts')
+      .select(dbClient.db.fn.count('id').as('count'))
+      .where('payment_id', '=', origPayment.id)
+      .executeTakeFirstOrThrow();
+
+    expect(Number(attemptsCount.count)).toBe(1);
+
+    // Cleanup
+    await dbClient.db.deleteFrom('audit_log').where('payment_id', '=', origPayment.id).execute();
+    await dbClient.db.deleteFrom('webhook_events').where('event_id', '=', eventId).execute();
+    await dbClient.db.deleteFrom('recovery_attempts').where('id', '=', attempt.id).execute();
+    await dbClient.db.deleteFrom('payments').where('id', '=', origPayment.id).execute();
   });
 });

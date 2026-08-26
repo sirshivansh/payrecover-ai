@@ -14,6 +14,11 @@
     "format": "biome format --write .",
     "type-check": "turbo run type-check",
     "evaluate": "tsx evaluation/runner.ts",
+    "demo:setup": "tsx apps/api/src/demo/runner.ts setup",
+    "demo:seed": "tsx apps/api/src/demo/runner.ts seed",
+    "demo:run": "tsx apps/api/src/demo/runner.ts run",
+    "demo:verify": "tsx apps/api/src/demo/runner.ts verify",
+    "demo:reset": "tsx apps/api/src/demo/runner.ts reset",
     "db:migrate": "tsx database/cli.ts latest",
     "db:rollback": "tsx database/cli.ts rollback",
     "clean": "turbo run clean && rimraf node_modules"

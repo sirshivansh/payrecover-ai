@@ -1,8 +1,19 @@
-import 'dotenv/config';
-import { buildApp } from './app.js';
-import { loadEnv } from './config/env.js';
+import path from 'node:path';
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: [
+    path.resolve(process.cwd(), '.env.local'),
+    path.resolve(process.cwd(), '../../.env.local'),
+    path.resolve(process.cwd(), '../.env.local'),
+    '.env',
+  ],
+  override: true,
+});
 
 async function main(): Promise<void> {
+  const { loadEnv } = await import('./config/env.js');
+  const { buildApp } = await import('./app.js');
   const env = loadEnv();
 
   const app = await buildApp({ env });

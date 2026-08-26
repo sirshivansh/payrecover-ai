@@ -180,7 +180,48 @@ cd apps/api && npm run build
 | **Phase 16** | ✅ Complete | Synthetic Evaluation Framework & Verification Harness (26 deterministic offline scenarios, CLI `npm run evaluate`, harness unit tests) |
 | **Phase 17** | ✅ Complete | Security, Concurrency & Rate Limiting Hardening (`@fastify/rate-limit` 100 req/min/IP middleware, prompt injection defense test suite, 100 concurrent webhook stress test harness, route auth & PII audit suite) |
 | **Phase 18** | ✅ Complete | Razorpay Test Mode Integration (`RazorpayClient` `rzp_test_*` assertion, HMAC-SHA256 signature verification, `createPaymentLinkTool` PostgreSQL paise authority, `RUN_RAZORPAY_TESTMODE` gate, `razorpay-testmode.test.ts`) |
-| Phase 19 | ⬜ Pending | See specification §26 |
+| **Phase 19** | ✅ Complete | Live External Razorpay Test Mode E2E Verification & Production Readiness (Full HTTPS Razorpay Test Mode API integration, live public zrok webhook ingestion, genuine `payment_link.paid` lifecycle, 26 synthetic evaluations PASS, 199 unit/integration tests PASS) |
+
+> **Live Razorpay Test Mode End-to-End Verification:**
+> Fully verified against live HTTPS Razorpay Test Mode API (`api.razorpay.com`) and public zrok tunnel. Ingests genuine `payment.failed` and `payment_link.paid` webhooks, creates genuine Razorpay payment links (`https://rzp.io/rzp/...`), verifies HMAC signatures in constant-time, enforces Redis/PostgreSQL idempotency, and updates dashboard metrics in real time.
+
+## Demo & CLI Rehearsal
+
+Execute end-to-end rehearsal workflows offline safely:
+
+```bash
+# 1. Verify infrastructure & environment
+npm run demo:setup
+
+# 2. Seed deterministic demo payment record
+npm run demo:seed
+
+# 3. Run complete end-to-end recovery rehearsal workflow
+npm run demo:run
+
+# 4. Verify recovery state, metrics, notifications, and audit traces
+npm run demo:verify
+
+# 5. Cleanly reset demo data
+npm run demo:reset
+```
+
+### Live Razorpay Test Mode E2E Demonstration
+
+```bash
+# 1. Start database & Redis
+docker compose up -d
+
+# 2. Start PayRecover application stack (API + Dashboard)
+npm run dev
+
+# 3. Share local API publicly for Razorpay webhooks
+zrok share public localhost:3000
+
+# 4. Run full test suite & synthetic evaluations
+npm test
+npm run evaluate
+```
 
 ## Specification
 
