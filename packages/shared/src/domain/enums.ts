@@ -65,4 +65,28 @@ export enum AuditActor {
   VERIFIER = 'verifier',
   SCHEDULER = 'scheduler',
   RECONCILER = 'reconciler',
+  NOTIFICATION = 'notification',
+}
+
+export enum NotificationChannel {
+  MERCHANT_ALERT = 'merchant_alert',
+  EMAIL = 'email',
+  WEBHOOK = 'webhook',
+  MOCK = 'mock',
+}
+
+export enum NotificationType {
+  RECOVERY_SUCCEEDED = 'recovery_succeeded',
+  RECOVERY_STOPPED = 'recovery_stopped',
+  RECOVERY_ESCALATED = 'recovery_escalated',
+  ACTION_OUTCOME_UNKNOWN = 'action_outcome_unknown',
+  RECOVERY_FAILED = 'recovery_failed',
+  PROVIDER_FAILURE = 'provider_failure',
+}
+
+export enum NotificationStatus {
+  PENDING = 'pending',
+  SENT = 'sent',
+  FAILED = 'failed',
+  SUPPRESSED = 'suppressed',
 }

@@ -176,7 +176,8 @@ cd apps/api && npm run build
 | **Phase 11** | ✅ Complete | External Reconciliation & Synthetic Evaluation Scenarios (`Reconciler` payment-link query & conservative §12.3 escalation, 21-case deterministic synthetic evaluation framework in `evaluation/`, CLI `npm run evaluate`) |
 | **Phase 12** | ✅ Complete | Audit, Metrics & Observability Service (`AuditLogger`, `MetricsService`, PII/secret redaction, `GET /api/v1/metrics/summary`, `GET /api/v1/recoveries`, `X-Merchant-Key` auth) |
 | **Phase 13** | ✅ Complete | Merchant Dashboard & Recovery Operations UI (`apps/web` React + Vite UI, Overview metrics, paginated recoveries, attempt detail, 10-state lifecycle visualizer, audit trace timeline, PII safety, `X-Merchant-Key` auth) |
-| Phase 14-19 | ⬜ Pending | See specification §26 |
+| **Phase 14** | ✅ Complete | Notification & Merchant Alerts Service (`NotificationService`, dual-layer idempotency, `MockNotificationProvider`, `MerchantAlertsDispatcher`, `003_add_notifications_table` migration, PII/secret redaction, trace correlation, state safety) |
+| Phase 15-19 | ⬜ Pending | See specification §26 |
 
 ## Specification
 

@@ -12,6 +12,7 @@ export * from './domain/idempotency.js';
 export * from './domain/policy.js';
 export * from './domain/action.js';
 export * from './domain/evaluation.js';
+export * from './domain/notification.js';
 
 // Database Types
 export * from './database/types.js';

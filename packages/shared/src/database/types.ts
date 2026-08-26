@@ -147,6 +147,31 @@ export type NewMerchantConfig = Insertable<MerchantConfigTable>;
 export type MerchantConfigUpdate = Updateable<MerchantConfigTable>;
 
 /**
+ * Notifications Table Interface (Phase 14)
+ */
+export interface NotificationsTable {
+  id: Generated<string>;
+  recovery_attempt_id: string | null;
+  payment_id: string | null;
+  channel: string;
+  event_type: string;
+  recipient: string;
+  status: string;
+  idempotency_key: string;
+  payload: ColumnType<Record<string, unknown>, Record<string, unknown> | undefined, Record<string, unknown>>;
+  attempts: ColumnType<number, number | undefined, number>;
+  max_attempts: ColumnType<number, number | undefined, number>;
+  error_message: string | null;
+  trace_id: string;
+  created_at: ColumnType<Date, Date | string | undefined, Date | string>;
+  sent_at: Date | string | null;
+}
+
+export type NotificationRow = Selectable<NotificationsTable>;
+export type NewNotification = Insertable<NotificationsTable>;
+export type NotificationUpdate = Updateable<NotificationsTable>;
+
+/**
  * Root Kysely Database Interface
  */
 export interface Database {
@@ -156,4 +181,5 @@ export interface Database {
   recovery_jobs: RecoveryJobsTable;
   audit_log: AuditLogTable;
   merchant_config: MerchantConfigTable;
+  notifications: NotificationsTable;
 }
