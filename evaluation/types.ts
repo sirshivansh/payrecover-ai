@@ -1,4 +1,11 @@
-import type { AIDecisionType, PaymentStatus, RecoveryStatus } from '@payrecover/shared';
+import type {
+  AIDecisionType,
+  NotificationStatus,
+  PaymentStatus,
+  PolicyDecisionType,
+  RecoveryActionType,
+  RecoveryStatus,
+} from '@payrecover/shared';
 
 export interface SyntheticCaseResult {
   id: number;
@@ -10,14 +17,26 @@ export interface SyntheticCaseResult {
     paymentStatus?: PaymentStatus;
     attemptCount?: number;
     errorSubstr?: string;
+    notificationStatus?: NotificationStatus;
+    policyDecision?: PolicyDecisionType;
+    aiDecision?: AIDecisionType;
+    actionType?: RecoveryActionType;
   };
   actual: {
     attemptStatus?: RecoveryStatus;
     paymentStatus?: PaymentStatus;
     attemptCount?: number;
     error?: string;
+    notificationStatus?: NotificationStatus;
+    policyDecision?: PolicyDecisionType;
+    aiDecision?: AIDecisionType;
+    actionType?: RecoveryActionType;
+    reconciliationOutcome?: string;
+    metricsVerified?: boolean;
   };
+  traceId?: string;
   details?: string;
+  scenarioDiagnostics?: Record<string, unknown>;
 }
 
 export interface EvaluationReport {

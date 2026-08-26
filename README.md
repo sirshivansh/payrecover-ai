@@ -177,7 +177,10 @@ cd apps/api && npm run build
 | **Phase 12** | ✅ Complete | Audit, Metrics & Observability Service (`AuditLogger`, `MetricsService`, PII/secret redaction, `GET /api/v1/metrics/summary`, `GET /api/v1/recoveries`, `X-Merchant-Key` auth) |
 | **Phase 13** | ✅ Complete | Merchant Dashboard & Recovery Operations UI (`apps/web` React + Vite UI, Overview metrics, paginated recoveries, attempt detail, 10-state lifecycle visualizer, audit trace timeline, PII safety, `X-Merchant-Key` auth) |
 | **Phase 14** | ✅ Complete | Notification & Merchant Alerts Service (`NotificationService`, dual-layer idempotency, `MockNotificationProvider`, `MerchantAlertsDispatcher`, `003_add_notifications_table` migration, PII/secret redaction, trace correlation, state safety) |
-| Phase 15-19 | ⬜ Pending | See specification §26 |
+| **Phase 16** | ✅ Complete | Synthetic Evaluation Framework & Verification Harness (26 deterministic offline scenarios, CLI `npm run evaluate`, harness unit tests) |
+| **Phase 17** | ✅ Complete | Security, Concurrency & Rate Limiting Hardening (`@fastify/rate-limit` 100 req/min/IP middleware, prompt injection defense test suite, 100 concurrent webhook stress test harness, route auth & PII audit suite) |
+| **Phase 18** | ✅ Complete | Razorpay Test Mode Integration (`RazorpayClient` `rzp_test_*` assertion, HMAC-SHA256 signature verification, `createPaymentLinkTool` PostgreSQL paise authority, `RUN_RAZORPAY_TESTMODE` gate, `razorpay-testmode.test.ts`) |
+| Phase 19 | ⬜ Pending | See specification §26 |
 
 ## Specification
 

@@ -26,6 +26,7 @@ const envSchema = z.object({
   RAZORPAY_KEY_ID: z.string().optional(),
   RAZORPAY_KEY_SECRET: z.string().optional(),
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),
+  RUN_RAZORPAY_TESTMODE: z.string().optional(),
 
   // NVIDIA AI (Phase 7+)
   NVIDIA_API_KEY: z.string().optional(),

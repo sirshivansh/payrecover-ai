@@ -1,4 +1,5 @@
 import cors from '@fastify/cors';
+import rateLimit from '@fastify/rate-limit';
 import Fastify from 'fastify';
 import type { AppEnv } from './config/env.js';
 import { type DatabaseClient, createDatabaseClient } from './database/client.js';
@@ -24,6 +25,13 @@ export async function buildApp(options: AppOptions) {
   await app.register(cors, {
     origin: options.env.CORS_ORIGIN,
     credentials: true,
+  });
+
+  // Rate Limiting — Phase 17 (§20, §26) (100 req/min/IP)
+  await app.register(rateLimit, {
+    max: options.env.NODE_ENV === 'test' ? 1000 : 100,
+    timeWindow: '1 minute',
+    allowList: (req) => req.url === '/health',
   });
 
   // Raw body parser for webhook HMAC signature verification (§8.2)

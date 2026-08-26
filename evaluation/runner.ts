@@ -1,7 +1,11 @@
 import { fileURLToPath } from 'node:url';
+import { RecoveryStatus } from '@payrecover/shared';
 import { SYNTHETIC_SCENARIOS } from './cases.js';
 import type { EvaluationReport, SyntheticCaseResult } from './types.js';
 
+/**
+ * Executes all synthetic evaluation scenarios in isolation (§15).
+ */
 export async function runEvaluation(): Promise<EvaluationReport> {
   const startTime = Date.now();
   const results: SyntheticCaseResult[] = [];
@@ -17,7 +21,7 @@ export async function runEvaluation(): Promise<EvaluationReport> {
         name: scenario.name,
         description: scenario.description,
         passed: false,
-        expected: { attemptStatus: 'SUCCEEDED' as unknown as RecoveryStatus },
+        expected: { attemptStatus: RecoveryStatus.SUCCEEDED },
         actual: { error: errMsg },
         details: `Exception thrown during execution: ${errMsg}`,
       });
@@ -54,9 +58,13 @@ if (isDirectExecution) {
         const badge = res.passed ? '✅ PASS' : '❌ FAIL';
         console.log(`${badge} | Case ${res.id.toString().padStart(2, '0')}: ${res.name}`);
         if (!res.passed) {
-          console.log(`   └ Expected: ${JSON.stringify(res.expected)}`);
-          console.log(`   └ Actual:   ${JSON.stringify(res.actual)}`);
-          if (res.details) console.log(`   └ Details:  ${res.details}`);
+          console.log(`   └ Expected:    ${JSON.stringify(res.expected)}`);
+          console.log(`   └ Actual:      ${JSON.stringify(res.actual)}`);
+          if (res.traceId) console.log(`   └ Trace ID:    ${res.traceId}`);
+          if (res.details) console.log(`   └ Details:     ${res.details}`);
+          if (res.scenarioDiagnostics) {
+            console.log(`   └ Diagnostics: ${JSON.stringify(res.scenarioDiagnostics)}`);
+          }
         }
       }
 

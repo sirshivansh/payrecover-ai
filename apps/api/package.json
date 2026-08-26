@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^10.0.0",
+    "@fastify/rate-limit": "^11.2.0",
     "@payrecover/shared": "*",
     "dotenv": "^16.4.0",
     "fastify": "^5.1.0",
