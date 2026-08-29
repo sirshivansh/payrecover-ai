@@ -1,9 +1,11 @@
-import type { RecoveryStatus } from '@payrecover/shared';
+import { RecoveryStatus } from '@payrecover/shared';
 import type { FastifyPluginAsync } from 'fastify';
 import { sql } from 'kysely';
 import type { DatabaseClient } from '../database/client.js';
 import { authMiddleware } from '../middleware/auth.js';
 import { AuditLogger } from '../observability/audit.js';
+
+const ALLOWED_RECOVERY_STATUSES = new Set<string>(Object.values(RecoveryStatus));
 
 /**
  * Recoveries Routes — Phase 12 (§8.1)
@@ -34,6 +36,13 @@ export const recoveriesRoutes = (options: RecoveriesRouteOptions): FastifyPlugin
      */
     app.get('/api/v1/recoveries', async (req, reply) => {
       const query = req.query as { status?: string; page?: string; limit?: string };
+
+      if (query.status && !ALLOWED_RECOVERY_STATUSES.has(query.status)) {
+        return reply.status(400).send({
+          status: 'error',
+          message: `Invalid status filter parameter: "${query.status}". Allowed values: ${Array.from(ALLOWED_RECOVERY_STATUSES).join(', ')}`,
+        });
+      }
 
       const page = Math.max(1, Number(query.page) || 1);
       const limit = Math.min(100, Math.max(1, Number(query.limit) || 20));

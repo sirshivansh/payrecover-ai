@@ -149,6 +149,19 @@ describe('Phase 12 — Observability API Routes', () => {
       }
     });
 
+    it('should return 400 Bad Request for invalid status parameter', async () => {
+      const response = await app.inject({
+        method: 'GET',
+        url: '/api/v1/recoveries?status=invalid_status_value',
+        headers: { 'x-merchant-key': apiKey },
+      });
+
+      expect(response.statusCode).toBe(400);
+      const body = response.json();
+      expect(body.status).toBe('error');
+      expect(body.message).toContain('Invalid status filter parameter');
+    });
+
     it('should respect page and limit parameters', async () => {
       const response = await app.inject({
         method: 'GET',
